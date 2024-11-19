@@ -5,6 +5,7 @@ from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, Conve
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 import time
 import random
+from TOKEN import TOKEN
 
 from footballer import Footballer
 
@@ -65,7 +66,7 @@ async def input_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 if __name__ == '__main__':
-    application = ApplicationBuilder().token('7633508145:AAHo8D4cymhqSQwIJx9c3_Ye4BNm3cFtQrY').build()
+    application = ApplicationBuilder().token(TOKEN).build()
     
     
     start_handler = CommandHandler('start', start)
