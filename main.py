@@ -19,12 +19,27 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 available_players_pool = [
-Footballer(name="Philipp", start_rank=3),
-Footballer(name="Mormar", start_rank=3),
-Footballer(name="Sboben", start_rank=4),
-Footballer(name="Mic", start_rank=2),
+# Footballer(name="Philipp", start_rank=3),
+# Footballer(name="Mormar", start_rank=3),
+# Footballer(name="Sboben", start_rank=4),
+# Footballer(name="Mic", start_rank=3),
+# Footballer(name="Karim", start_rank=3),
+# Footballer(name="Duccio", start_rank=1),
+
+Footballer(name="Bonfa", start_rank=2),
 Footballer(name="Karim", start_rank=3),
+Footballer(name="Mor", start_rank=3),
+Footballer(name="Akil", start_rank=3),
 Footballer(name="Duccio", start_rank=1),
+Footballer(name="Philipp", start_rank=3),
+Footballer(name="Francesco collega", start_rank=3),
+Footballer(name="Blallo", start_rank=2),
+Footballer(name="Gio", start_rank=3),
+Footballer(name="Pezzo", start_rank=3),
+Footballer(name="Yarru", start_rank=3),
+Footballer(name="Sboben", start_rank=4),
+Footballer(name="Moataz", start_rank=3),
+Footballer(name="Zebib", start_rank=2),
 ]
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -38,8 +53,8 @@ async def add_player(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def draw_teams(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     team_size=int(len(available_players_pool) / 2)
-
-    team_a = random.choices(available_players_pool, k=team_size)
+    
+    team_a = random.sample(available_players_pool, team_size)
     team_b = [x for x in available_players_pool if x not in team_a]
 
     team_a_names = []
