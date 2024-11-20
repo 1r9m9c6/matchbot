@@ -7,7 +7,7 @@ import time
 import random
 from TOKEN import TOKEN
 
-from footballer import Footballer
+from footballer import *
 
 # Enable logging
 logging.basicConfig(
@@ -17,30 +17,6 @@ logging.basicConfig(
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
-
-available_players_pool = [
-# Footballer(name="Philipp", start_rank=3),
-# Footballer(name="Mormar", start_rank=3),
-# Footballer(name="Sboben", start_rank=4),
-# Footballer(name="Mic", start_rank=3),
-# Footballer(name="Karim", start_rank=3),
-# Footballer(name="Duccio", start_rank=1),
-
-Footballer(name="Bonfa", start_rank=2),
-Footballer(name="Karim", start_rank=3),
-Footballer(name="Mor", start_rank=3),
-Footballer(name="Akil", start_rank=3),
-Footballer(name="Duccio", start_rank=1),
-Footballer(name="Philipp", start_rank=3),
-Footballer(name="Francesco collega", start_rank=3),
-Footballer(name="Blallo", start_rank=2),
-Footballer(name="Gio", start_rank=3),
-Footballer(name="Pezzo", start_rank=3),
-Footballer(name="Yarru", start_rank=3),
-Footballer(name="Sboben", start_rank=4),
-Footballer(name="Moataz", start_rank=3),
-Footballer(name="Zebib", start_rank=2),
-]
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
@@ -66,7 +42,7 @@ async def draw_teams(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     logger.info(team_a_names)
     logger.info(team_b_names)
-    out_text = f"Sorting teams...\nTEAM A: {team_a_names}\nTEAM B: {team_b_names}\n"
+    out_text = f"Sorting teams...\nThere are {teams_combinations(len(available_players_pool), team_size)} possible combinations.\nTEAM A: {team_a_names}\nTEAM B: {team_b_names}\n"
     logger.info(out_text)
     await context.bot.send_message(chat_id=update.effective_chat.id, text=out_text)
 
