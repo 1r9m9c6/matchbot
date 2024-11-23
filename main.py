@@ -20,6 +20,8 @@ logger = logging.getLogger(__name__)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+    available_players_pool.clear()
+    players_pool.clear() #TODO: read from file
 
 async def add_new_player(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
@@ -64,16 +66,29 @@ async def availables_list_from_input(update: Update, context: ContextTypes.DEFAU
     application.remove_handler(handler_availables_list_from_input)
     players_names = update.message.text
     players_names = players_names.split("\n")
-    out_text = f"You inserted {len(players_names)} players:\n{players_names}\n"
+    if (len(players_names) % 2) != 0:
+        out_text=f"ERROR: you have to put a even number of players"
+        await update.message.reply_text(out_text)
+        return
+    someone_new=0
+    new_players=[]
+    out_text=""
+    # out_text = f"You inserted {len(players_names)} players:\n{players_names}\n"
+    # await update.message.reply_text(out_text)
+    for pl_name in players_names:
+        if is_player_new(pl_name):
+            someone_new=1
+            new_players.append(pl_name)
+            ## Player not registered, using default initial rank (3)
+            players_pool.append(Footballer(name=pl_name, start_rank=3))
+            available_players_pool.append(Footballer(name=pl_name, start_rank=3))
+        else:
+            pl_rank = get_player_rank(pl_name)
+            available_players_pool.append(Footballer(name=pl_name, start_rank=pl_rank))
+    if someone_new:
+            out_text = f"Adding new players with default rank 3: {new_players}\n"
+    out_text = out_text+f"Ok! Do you want to make the teams?"
     await update.message.reply_text(out_text)
-    # if is_player_new(pl_name):
-    #     ## Player not registered, using default initial rank (3)
-    #     players_pool.append(Footballer(name=pl_name, start_rank=3))
-    #     available_players_pool.append(Footballer(name=pl_name, start_rank=3))
-    #     out_text = f"Adding "
-    # else:
-    #     pl_rank = get_player_rank(pl_name)
-    #     available_players_pool.append(Footballer(name=pl_name, start_rank=pl_rank))
 
 ## Printing to bot championship's stats
 async def get_players_pool(update: Update, context: ContextTypes.DEFAULT_TYPE):
