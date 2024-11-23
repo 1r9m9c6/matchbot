@@ -58,9 +58,9 @@ async def draw_teams(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def new_match(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text("Insert players' names")
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, player_list_input))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, availables_list_from_input))
 
-async def player_list_input(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def availables_list_from_input(update: Update, context: ContextTypes.DEFAULT_TYPE):
     players_names = update.message.text
     players_names = players_names.split("\n")
     out_text = f"You inserted {len(players_names)} players:\n{players_names}\n"
