@@ -70,7 +70,6 @@ async def draw_teams(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     logger.info(out_text)
     await context.bot.send_message(chat_id=update.effective_chat.id, text=out_text)
 
-
 async def input_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     pl_name = update.message.text
     await update.message.reply_text(f"What is {pl_name}'s initial rank? (1 to 5)?")
