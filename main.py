@@ -58,9 +58,10 @@ async def draw_teams(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def new_match(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text("Insert players' names")
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, availables_list_from_input))
+    application.add_handler(handler_availables_list_from_input)
 
 async def availables_list_from_input(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    application.remove_handler(handler_availables_list_from_input)
     players_names = update.message.text
     players_names = players_names.split("\n")
     out_text = f"You inserted {len(players_names)} players:\n{players_names}\n"
@@ -100,6 +101,8 @@ async def clean_players_pool_request(update: Update, context: ContextTypes.DEFAU
 handle_new_player_name_insertion = MessageHandler(filters.TEXT & ~filters.COMMAND, new_player_name_insertion)
 handle_new_player_rank_insertion = MessageHandler(filters.TEXT & ~filters.COMMAND, new_player_rank_insertion)
 # handle_clean_players_pool = MessageHandler(filters.Regex("^(Yes, proceed|No, go back)$"), perform_clean_players_pool)
+handler_availables_list_from_input = MessageHandler(filters.TEXT & ~filters.COMMAND, availables_list_from_input)
+
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TOKEN).build()
