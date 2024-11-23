@@ -37,7 +37,6 @@ async def new_match(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text("Insert players' names")
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, input_text))
 
-==== BASE ====
 async def input_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     pl_name = update.message.text
     await update.message.reply_text(f"What is {pl_name}'s initial rank? (1 to 5)?")
